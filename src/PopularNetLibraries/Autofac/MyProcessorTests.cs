@@ -36,10 +36,10 @@ namespace PopularNetLibraries.Autofac
         }
     }
 
-    public class AutofacTests
+    public class MyProcessorTests
     {
         [Fact]
-        public void MyProcessExecute_WhenID_1()
+        public void Execute_GivenID_1()
         {
             MyProcessor _myProcessor;
 
@@ -58,7 +58,7 @@ namespace PopularNetLibraries.Autofac
         }
 
         [Fact]
-        public void MyProcessExecute_WhenID_2() 
+        public void Execute_GivenID_2()
         {
             var dataId = 2;
             var containerBuilder = RegisterBasicTypes();
@@ -70,6 +70,20 @@ namespace PopularNetLibraries.Autofac
 
             Assert.Equal(1, myProcessor.RegisteredMessages);
         }
+
+        [Fact] 
+        public void Execute_ResolveDirect() 
+        {
+            // Direct recolving instances from container is NOT recomended
+            // https://autofaccn.readthedocs.io/en/latest/lifetime/working-with-scopes.html
+            CompositionRoot()
+                .Resolve<MyProcessor>()
+                .Execute(1);
+
+            Assert.True(true);
+        }
+
+        private static IContainer CompositionRoot() => RegisterBasicTypes().Build();
 
         private static ContainerBuilder RegisterBasicTypes()
         {
