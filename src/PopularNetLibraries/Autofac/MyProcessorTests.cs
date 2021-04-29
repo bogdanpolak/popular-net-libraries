@@ -1,9 +1,11 @@
 ﻿using Autofac;
 using PopularNetLibraries.Autofac.Sample;
+using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace PopularNetLibraries.Autofac
 {
+    [ExcludeFromCodeCoverage]
     public class MyProcessor
     {
         private readonly IConfiguration _configuration;
