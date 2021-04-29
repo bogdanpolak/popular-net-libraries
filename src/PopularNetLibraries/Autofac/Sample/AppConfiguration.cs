@@ -1,12 +1,17 @@
-﻿namespace PopularNetLibraries.Autofac.Sample
+﻿using LanguageExt;
+using static LanguageExt.Prelude;
+
+namespace PopularNetLibraries.Autofac.Sample
 {
     public class AppConfiguration : IConfiguration
     {
-        public string GetOptionAsString(string optionName)
+        public Option<string> GetOptionAsString(string optionName)
         {
-            if (optionName == "EnableLogger")
-                return "yes";
-            return null;
+            return optionName.ToLower() switch
+            {
+                "enablelogger" => "yes",
+                _ => None
+            };
         }
     }
 }

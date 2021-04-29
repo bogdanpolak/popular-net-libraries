@@ -25,7 +25,10 @@ namespace PopularNetLibraries.Autofac
         {
             var data = _dataRepository.GetData(Id);
             var isValid = data.Name.ToLower().Contains("code");
-            var isLoggerEnabled = _configuration.GetOptionAsString("EnableLogger").ToLower().Contains("yes");
+            var isLoggerEnabled = _configuration.GetOptionAsString("EnableLogger")
+                .IfNone("no")
+                .ToLower()
+                .Contains("yes");
             if (!isValid && isLoggerEnabled)
             {
                 _logger.Info($"[DataValidaton] Non valid Id provided: {Id}");

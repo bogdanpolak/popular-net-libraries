@@ -1,7 +1,9 @@
-﻿namespace PopularNetLibraries.Autofac.Sample
+﻿using LanguageExt;
+
+namespace PopularNetLibraries.Autofac.Sample
 {
     public interface IConfiguration
     {
-        string GetOptionAsString(string optionName);
+        Option<string> GetOptionAsString(string optionName);
     }
 }
