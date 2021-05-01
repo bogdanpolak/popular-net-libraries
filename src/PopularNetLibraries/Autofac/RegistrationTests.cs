@@ -4,15 +4,18 @@ using Xunit;
 
 namespace PopularNetLibraries.Autofac
 {
-    class A { public B MyB { get; set; } }
-    class B { }
+    internal class A { public B MyB { get; set; } }
 
-    class Calculator {
+    internal class B { }
+
+    public class Calculator {
         public string Method { get; private set; }
-        public Calculator(string method) { Method = method; }
+        protected Calculator(string method) { Method = method; }
     }
-    class SimpleCalculator : Calculator { public SimpleCalculator() : base("simple") { } }
-    class ComplexCalculator : Calculator { public ComplexCalculator() : base("complex") {} }
+
+    public class SimpleCalculator : Calculator { public SimpleCalculator() : base("simple") { } }
+
+    public class ComplexCalculator : Calculator { public ComplexCalculator() : base("complex") {} }
 
     public class RegistrationTests
     {

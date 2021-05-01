@@ -33,7 +33,7 @@ namespace PopularNetLibraries.Autofac
         }
     }
 
-    class Processor
+    public class Processor
     {
         private readonly IConfiguration _configuration;
         private readonly ILogger _logger;
