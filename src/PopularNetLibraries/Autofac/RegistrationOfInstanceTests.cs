@@ -2,6 +2,7 @@
 using static LanguageExt.Prelude;
 using PopularNetLibraries.Autofac.Sample;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Autofac;
 using Xunit;
@@ -11,21 +12,22 @@ namespace PopularNetLibraries.Autofac
     class AppConfiguration2 : IConfiguration
     {
         private readonly string _initialStartDate;
-        private readonly string _raportingFolder;
+        private readonly string _reportingFolder;
 
-        public AppConfiguration2(DateTime initialStartDate, string raportingFolder)
+        public AppConfiguration2(DateTime initialStartDate, string reportingFolder)
         {
             _initialStartDate = initialStartDate.ToString("yyyy-MM-dd");
-            _raportingFolder = raportingFolder;
+            _reportingFolder = reportingFolder;
         }
 
+        [SuppressMessage("ReSharper", "StringLiteralTypo")]
         public Option<string> GetOptionAsString(string optionName)
         {
             return optionName.ToLower() switch
             {
                 "connectionstring" => @"Data Source=.\SQLEXPRESS;Initial Catalog=TirexDB;Integrated Security=True",
                 "initialstartdate" => _initialStartDate,
-                "reportsuploadfolder" => _raportingFolder,
+                "reportsuploadfolder" => _reportingFolder,
                 _ => None,
             };
         }
@@ -44,12 +46,12 @@ namespace PopularNetLibraries.Autofac
 
         public void Run()
         {
-            _configuration.GetOptionAsString("ReportSuploadFolder")
-                .Match(Some: folderPath => WiteDataToTextFile(folderPath),
-                        None: () => _logger.Warning("Not able to read Configuration[ReportSuploadFolder]"));
+            _configuration.GetOptionAsString("ReportsUploadFolder")
+                .Match(Some: WriteDataToTextFile,
+                        None: () => _logger.Warning("Not able to read Configuration[ReportsUploadFolder]"));
         }
 
-        private void WiteDataToTextFile(string folderPath)
+        private void WriteDataToTextFile(string folderPath)
         {
             var initialStartDate = _configuration.GetOptionAsString("InitialStartDate")
                 .IfNone("");
@@ -65,11 +67,11 @@ namespace PopularNetLibraries.Autofac
     public class RegistrationOfInstanceTests
     {
         private static string TestFolderPath => Path.Combine(Path.GetTempPath(), "AdaptiveSoft");
-        private static string RaportingTempFolder => Path.Combine(TestFolderPath, "Reports");
+        private static string ReportingTempFolder => Path.Combine(TestFolderPath, "Reports");
 
         public RegistrationOfInstanceTests()
         {
-            Directory.CreateDirectory(RaportingTempFolder);
+            Directory.CreateDirectory(ReportingTempFolder);
         }
 
         ~RegistrationOfInstanceTests()
@@ -80,7 +82,7 @@ namespace PopularNetLibraries.Autofac
         [Fact]
         public void Processor_GivenInstanceConfiguration()
         {
-            var appConfiguration = new AppConfiguration2(new DateTime(2020,11,30), RaportingTempFolder);
+            var appConfiguration = new AppConfiguration2(new DateTime(2020,11,30), ReportingTempFolder);
 
             var containerBuilder = RegisterBasicTypes();
             // ------------------------------------------------------------------------
@@ -91,7 +93,7 @@ namespace PopularNetLibraries.Autofac
                 .Resolve<Processor>()
                 .Run();
 
-            var expectedFile = Path.Combine(RaportingTempFolder, "store.txt");
+            var expectedFile = Path.Combine(ReportingTempFolder, "store.txt");
             var isExists = File.Exists(expectedFile);
             Assert.True( isExists );
         }

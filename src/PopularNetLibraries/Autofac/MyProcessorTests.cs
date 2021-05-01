@@ -21,9 +21,9 @@ namespace PopularNetLibraries.Autofac
             _dataRepository = dataRepository;
         }
 
-        public void Execute(int Id)
+        public void Execute(int id)
         {
-            var data = _dataRepository.GetData(Id);
+            var data = _dataRepository.GetData(id);
             var isValid = data.Name.ToLower().Contains("code");
             var isLoggerEnabled = _configuration.GetOptionAsString("EnableLogger")
                 .IfNone("no")
@@ -31,7 +31,7 @@ namespace PopularNetLibraries.Autofac
                 .Contains("yes");
             if (!isValid && isLoggerEnabled)
             {
-                _logger.Info($"[DataValidaton] Non valid Id provided: {Id}");
+                _logger.Info($"[DataValidation] Non valid Id provided: {id}");
                 RegisteredMessages++;
             }
         }
@@ -42,7 +42,7 @@ namespace PopularNetLibraries.Autofac
         [Fact]
         public void Execute_GivenID_1()
         {
-            MyProcessor _myProcessor;
+            MyProcessor myProcessor;
 
             var containerBuilder = RegisterBasicTypes();
 
@@ -50,12 +50,12 @@ namespace PopularNetLibraries.Autofac
 
             using (var lifetimeScope = container.BeginLifetimeScope())
             {
-                _myProcessor = lifetimeScope.Resolve<MyProcessor>();
+                myProcessor = lifetimeScope.Resolve<MyProcessor>();
             }
 
-            _myProcessor.Execute(1);
+            myProcessor.Execute(1);
 
-            Assert.Equal(0, _myProcessor.RegisteredMessages);
+            Assert.Equal(0, myProcessor.RegisteredMessages);
         }
 
         [Fact]

@@ -11,22 +11,22 @@ namespace PopularNetLibraries.Autofac
 
     class Element : IElement
     {
-        private int counter = 0;
+        private int _counter = 0;
 
-        public int Increment() => ++counter;
+        public int Increment() => ++_counter;
     }
 
     public class ScopeTests
     {
-        ContainerBuilder containerBuilder = new ContainerBuilder();
+        readonly ContainerBuilder _containerBuilder = new ContainerBuilder();
 
         [Fact] 
         public void InstancePerDependency()
         {
-            containerBuilder.RegisterType<Element>()
+            _containerBuilder.RegisterType<Element>()
                 .As<IElement>();
                 // default: .InstancePerDependency;
-            var container = containerBuilder.Build();
+            var container = _containerBuilder.Build();
 
             var actual = TestScopeTimes(container, 10);
 
@@ -36,10 +36,10 @@ namespace PopularNetLibraries.Autofac
         [Fact]
         public void SingleInstance()
         {
-            containerBuilder.RegisterType<Element>()
+            _containerBuilder.RegisterType<Element>()
                 .As<IElement>()
                 .SingleInstance();
-            var container =  containerBuilder.Build();
+            var container =  _containerBuilder.Build();
 
             var _ = TestScopeTimes(container, 5);
             var actual = TestScopeTimes(container, 5);
@@ -50,10 +50,10 @@ namespace PopularNetLibraries.Autofac
         [Fact]
         public void InstancePerLifetimeScope()
         {
-            containerBuilder.RegisterType<Element>()
+            _containerBuilder.RegisterType<Element>()
                 .As<IElement>()
                 .InstancePerLifetimeScope();
-            var container = containerBuilder.Build();
+            var container = _containerBuilder.Build();
 
             var _ = TestScopeTimes(container, 5);
             var actual = TestScopeTimes(container, 5);
