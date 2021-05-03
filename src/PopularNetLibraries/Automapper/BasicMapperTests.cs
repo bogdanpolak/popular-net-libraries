@@ -3,7 +3,7 @@ using Xunit;
 
 namespace PopularNetLibraries.Automapper
 {
-    public class BasicMapper
+    public class BasicMapperTests
     {
         private class Order { public int OrderId; }
         private class OrderDto { public int OrderId; }
