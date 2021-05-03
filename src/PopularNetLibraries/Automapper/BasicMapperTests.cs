@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using Xunit;
 
@@ -43,6 +45,44 @@ namespace PopularNetLibraries.Automapper
              */
             Assert.Contains("Unmapped members were found.",exception.Message);
             Assert.Contains("Unmapped properties:\nValueee",exception.Message);
+        }
+
+        class Journal
+        {
+            public List<double> Grades; 
+            public Student Student;
+            public double GetAverageGrade() => Grades.Average();
+        }
+
+        private class Student
+        {
+            public int ID;
+            public string FirstName;
+            public string LastName;
+            public string GetFullName() => $"{FirstName} {LastName}";
+        }
+
+        private class YearGrade
+        {
+            public string StudentFullName;
+            public double AverageGrade;
+        }
+
+        [Fact]
+        public void MapWithFlattering()
+        {
+            var config = new MapperConfiguration(expression => expression.CreateMap<Journal, YearGrade>());
+            var mapper = config.CreateMapper();
+            var journal = new Journal
+            {
+                Student = new Student {ID = 1, FirstName = "Bogdan", LastName = "Polak"},
+                Grades = new List<double>{3.5, 4.5, 4, 3.5, 4.2, 4.5, 3.8, 5}
+            };
+
+            var yearGrade = mapper.Map<YearGrade>(journal);
+            
+            Assert.Equal("Bogdan Polak",yearGrade.StudentFullName);
+            Assert.Equal(expected:4.125,actual:yearGrade.AverageGrade,precision:4);
         } 
     }
     
