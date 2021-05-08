@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -47,5 +48,35 @@ namespace PopularNetLibraries
             var actual = MinMaxSum(numbers);
             Assert.Equal("10 14", actual);
         }
+
+        private static string AlmostSorted(List<int> number)
+        {
+            return ""; // swap idx1 idx2  | reverse idx1 idx2  | no
+        }
+        
+        [Fact]
+        public void AlmostSorted_Reverse()
+        {   
+            var numbers = new List<int> {1, 2, 6, 5, 4, 3, 7, 8};
+            var actual = AlmostSorted(numbers);
+            Assert.Equal("reverse 3 6", actual);
+        }
+        
+        [Fact]
+        public void AlmostSorted_SwapOverReverse()
+        {
+            var numbers = new List<int> {1, 3, 2, 4};  // swap
+            var actual = AlmostSorted(numbers);
+            Assert.Equal("no", actual);
+        }
+        
+        [Fact]
+        public void AlmostSorted_no()
+        {
+            var numbers = new List<int> {1, 3, 2, 4, 7, 6, 5, 8};  // no = 2 operations needed: swap + reverse
+            var actual = AlmostSorted(numbers);
+            Assert.Equal("no", actual);
+        }
+        
     }
 }
