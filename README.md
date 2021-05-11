@@ -3,7 +3,8 @@
 Exercise project to demonstrate following libraries:
 
 * Autofac 
-* AutoMapper 
+* AutoMapper
+* BenchmarkDotNet (https://youtu.be/bBpFpr-Votk?t=11468) 
 * FluentValidation 
 * Hangfire 
 * MediatR 
