@@ -68,6 +68,11 @@ namespace PopularNetLibraries
         {
             private static string AlmostSorted(List<int> number)
             {
+                if (number == null || number.Count < 2) return "";
+                if (number.Count == 2)
+                {
+                    return number[0] < number[1] ? "yes" : "swap 1 2";
+                }
                 return ""; // swap idx1 idx2  | reverse idx1 idx2  | no
             }
 
