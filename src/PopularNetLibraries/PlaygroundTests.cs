@@ -72,6 +72,22 @@ namespace PopularNetLibraries
             }
 
             [Fact]
+            public void AlmostSorted_Swap_WhenTwoElemArray()
+            {
+                var numbers = new List<int> {6, 5};
+                var actual = AlmostSorted(numbers);
+                Assert.Equal("swap 1 2", actual);
+            }
+
+            [Fact]
+            public void AlmostSorted_Yes_WhenTwoSorted()
+            {
+                var numbers = new List<int> {50, 72};
+                var actual = AlmostSorted(numbers);
+                Assert.Equal("yes", actual);
+            }
+
+            [Fact]
             public void AlmostSorted_Reverse()
             {
                 var numbers = new List<int> {1, 2, 6, 5, 4, 3, 7, 8};
