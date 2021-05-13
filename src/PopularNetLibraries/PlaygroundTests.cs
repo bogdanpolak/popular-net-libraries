@@ -64,11 +64,28 @@ namespace PopularNetLibraries
             }
         }
 
-        public class ProblemOneSwapToSort
+        public class ProblemOneSwapToSort  // aka AlmostSorted
         {
-            private static string SwapToSort(List<int> number)
+            private static string SwapToSort(List<int> numbers)
             {
-                return ""; // yes | swap idx1 idx2  | no
+                var idx1 = -1;  // index of the first un ordered item in the lists (numbers)
+                var idx2 = -1;  // index of the second un ordered item in the lists (numbers)
+                for (var idx = 1; idx < numbers.Count; idx++)
+                {
+                    if (numbers[idx - 1] <= numbers[idx]) continue;
+                    if (idx1 < 0)
+                        idx1 = idx;
+                    else if (idx2 < 0)
+                        idx2 = idx;
+                    else
+                        return "no";
+                }
+                if (idx1 < 0) return "yes";
+                if (idx2 < 0) idx2 = idx1;
+                var isAbleToSwap = (idx1 == 1 || numbers[idx1 - 2] <= numbers[idx2]) &&
+                                   (idx2 == numbers.Count - 1 ||
+                                    numbers[idx1 - 1] <= numbers[idx2 + 1]);
+                return isAbleToSwap ? $"swap {idx1} {idx2 + 1}" : "no";
             }
 
             [Fact]
@@ -88,17 +105,49 @@ namespace PopularNetLibraries
             }
 
             [Fact]
+            public void SwapToSort_Swap_TwoFirst_When4Numbers()
+            {
+                var numbers = new List<int> {2, 1, 3, 4};
+                var actual = SwapToSort(numbers);
+                Assert.Equal("swap 1 2", actual);
+            }
+
+            [Fact]
+            public void SwapToSort_Swap_TwoLast_When4Numbers()
+            {
+                var numbers = new List<int> {1, 2, 4, 3};
+                var actual = SwapToSort(numbers);
+                Assert.Equal("swap 3 4", actual);
+            }
+            
+            [Fact]
+            public void SwapToSort_no_When4Numbers()
+            {
+                var numbers = new List<int> {1, 3, 4, 2};
+                var actual = SwapToSort(numbers);
+                Assert.Equal("no", actual);
+            }
+            
+            [Fact]
             public void SwapToSort_Swap_TwoNext()
             {
                 var numbers = new List<int> {1, 3, 2, 4};
                 var actual = SwapToSort(numbers);
                 Assert.Equal("swap 2 3", actual);
             }
+            
+            [Fact]
+            public void SwapToSort_Swap_TwoSeparated()
+            {
+                var numbers = new List<int> {1, 5, 3, 4, 2, 6};
+                var actual = SwapToSort(numbers);
+                Assert.Equal("swap 2 5", actual);
+            }
         }
         
         public class ProblemReverseToSort
         {
-            private string ReverseToSort(List<int> number)
+            private string ReverseToSort(List<int> numbers)
             {
                 return "";  // yes | reverse idx1 idx2  | no
             }
