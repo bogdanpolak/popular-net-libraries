@@ -64,55 +64,57 @@ namespace PopularNetLibraries
             }
         }
 
-        public class ProblemAlmostSorted 
+        public class ProblemOneSwapToSort
         {
-            private static string AlmostSorted(List<int> number)
+            private static string SwapToSort(List<int> number)
             {
-                if (number == null || number.Count < 2) return "";
-                if (number.Count == 2)
-                {
-                    return number[0] < number[1] ? "yes" : "swap 1 2";
-                }
-                return ""; // swap idx1 idx2  | reverse idx1 idx2  | no
+                return ""; // yes | swap idx1 idx2  | no
             }
 
             [Fact]
-            public void AlmostSorted_Swap_WhenTwoElemArray()
+            public void SwapToSort_Swap_WhenTwoElemArray()
             {
                 var numbers = new List<int> {6, 5};
-                var actual = AlmostSorted(numbers);
+                var actual = SwapToSort(numbers);
                 Assert.Equal("swap 1 2", actual);
             }
 
             [Fact]
-            public void AlmostSorted_Yes_WhenTwoSorted()
+            public void SwapToSort_Yes_WhenTwoSorted()
             {
                 var numbers = new List<int> {50, 72};
-                var actual = AlmostSorted(numbers);
+                var actual = SwapToSort(numbers);
                 Assert.Equal("yes", actual);
             }
 
             [Fact]
-            public void AlmostSorted_Reverse()
+            public void SwapToSort_Swap_TwoNext()
+            {
+                var numbers = new List<int> {1, 3, 2, 4};
+                var actual = SwapToSort(numbers);
+                Assert.Equal("swap 2 3", actual);
+            }
+        }
+        
+        public class ProblemReverseToSort
+        {
+            private string ReverseToSort(List<int> number)
+            {
+                return "";  // yes | reverse idx1 idx2  | no
+            }
+            [Fact]
+            public void ReverseToSort_Reverse4ElemsInside()
             {
                 var numbers = new List<int> {1, 2, 6, 5, 4, 3, 7, 8};
-                var actual = AlmostSorted(numbers);
+                var actual = ReverseToSort(numbers);
                 Assert.Equal("reverse 3 6", actual);
             }
 
             [Fact]
-            public void AlmostSorted_SwapOverReverse()
+            public void ReverseToSort_NotAbleToSort()
             {
-                var numbers = new List<int> {1, 3, 2, 4}; // swap
-                var actual = AlmostSorted(numbers);
-                Assert.Equal("no", actual);
-            }
-
-            [Fact]
-            public void AlmostSorted_no()
-            {
-                var numbers = new List<int> {1, 3, 2, 4, 7, 6, 5, 8}; // no = 2 operations needed: swap + reverse
-                var actual = AlmostSorted(numbers);
+                var numbers = new List<int> {1, 3, 2, 4, 7, 6, 5, 8}; // no
+                var actual = ReverseToSort(numbers);
                 Assert.Equal("no", actual);
             }
         }
