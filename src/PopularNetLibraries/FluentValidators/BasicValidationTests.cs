@@ -45,5 +45,11 @@ namespace PopularNetLibraries.FluentValidators
                 validationResult.Errors[0].ErrorMessage);
             Assert.Equal("Lastname", validationResult.Errors[0].PropertyName);
         }
+        
+        // TODO: Add tests for EmployeeValidator: Employee.FirstName is not empty (test null and empty string)
+        // TODO: Add tests for EmployeeValidator: Invalid when Employee is empty
+        // TODO: Add tests for EmployeeValidator: new properties BirthMonth / BirthDay (valid and invalid)
+        // TODO: Add tests for EmployeeValidator: add Employee.Status - equal to one of 3 string values (see link below)
+        // **** https://stackoverflow.com/questions/33959323/checking-if-parameter-is-one-of-3-values-with-fluent-validation
     }
 }

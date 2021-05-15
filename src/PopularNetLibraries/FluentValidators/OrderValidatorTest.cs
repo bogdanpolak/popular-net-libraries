@@ -106,5 +106,9 @@ namespace PopularNetLibraries.FluentValidators
             Assert.False(result.IsValid);
             Assert.Equal(ValidationErrors.InvalidOrderDate,result.Errors[0].ErrorCode);
         }
+        
+        // TODO: Add fact for invalid order: no LineItems
+        // TODO: Add fact for invalid order: LineItems.Sum(total) == 0
+        // TODO: Add fact for invalid order: empty order (multiple errors)
     }
 }
