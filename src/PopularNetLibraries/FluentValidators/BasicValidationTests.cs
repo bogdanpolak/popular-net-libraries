@@ -6,28 +6,25 @@ namespace PopularNetLibraries.FluentValidators
 {
     public class BasicValidationTests
     {
-        private static class Sample01
+        private class Employee
         {
-            public class Employee
-            {
-                public string Firstname { get; init; }
-                public string Lastname { get; init; }
-            }
+            public string Firstname { get; init; }
+            public string Lastname { get; init; }
+        }
 
-            public class EmployeeValidator : AbstractValidator<Employee>
+        private class EmployeeValidator : AbstractValidator<Employee>
+        {
+            public EmployeeValidator()
             {
-                public EmployeeValidator()
-                {
-                    RuleFor(employee => employee.Lastname).NotNull().MinimumLength(2);
-                }
+                RuleFor(employee => employee.Lastname).NotNull().MinimumLength(2);
             }
         }
         
         [Fact]
         public void Employee_Valid()
         {
-            var employee = new Sample01.Employee {Firstname = "Bogdan", Lastname = "Polak"};
-            var validator = new Sample01.EmployeeValidator();
+            var employee = new Employee {Firstname = "Bogdan", Lastname = "Polak"};
+            var validator = new EmployeeValidator();
             
             var testValidationResult = validator.TestValidate(employee);
 
@@ -37,8 +34,8 @@ namespace PopularNetLibraries.FluentValidators
         [Fact]
         public void Employee_Invalid_LastNameHas1Char()
         {
-            var employee = new Sample01.Employee {Firstname = "Bogdan", Lastname = "P"};
-            var validator = new Sample01.EmployeeValidator();
+            var employee = new Employee {Firstname = "Bogdan", Lastname = "P"};
+            var validator = new EmployeeValidator();
             
             var validationResult = validator.Validate(employee);
             Assert.False(validationResult.IsValid,"Lastname with 1 char - IsValid should be: false");
