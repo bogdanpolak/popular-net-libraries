@@ -27,7 +27,7 @@ namespace PopularNetLibraries.MediatR
         public async Task SendPing_WithResultPingPong()
         {
             var mediator = MediatorBuilder.Build(_myAssembly);
-            var result = await mediator.Send(new Ping{Message = "ping"});
+            var result = await mediator.Send(new PingRequest{Message = "ping"});
             Assert.Equal("ping-pong",result.Message);
         }
     }
