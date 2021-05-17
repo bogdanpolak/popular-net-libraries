@@ -58,7 +58,7 @@ namespace PopularNetLibraries
             [Fact]
             public void OneToFive()
             {
-                var numbers = new int[] {1, 2, 3, 4, 5};
+                var numbers = new[] {1, 2, 3, 4, 5};
                 var actual = MinMaxSum(numbers);
                 Assert.Equal("10 14", actual);
             }
@@ -147,23 +147,25 @@ namespace PopularNetLibraries
         
         public class ProblemReverseToSort
         {
-            private string ReverseToSort(List<int> numbers)
+            private static string ReverseToSort(IReadOnlyList<int> numbers)
             {
-                return "";  // yes | reverse idx1 idx2  | no
+                return numbers.Count<2 || numbers.Count==2 && numbers[0]<numbers[1] ? "yes" : "";  
+                // yes | reverse idx1 idx2  | no
             }
             [Fact]
             public void ReverseToSort_Reverse4ElemsInside()
             {
-                var numbers = new List<int> {1, 2, 6, 5, 4, 3, 7, 8};
-                var actual = ReverseToSort(numbers);
+                // var numbers = new List<int> {1, 2, 6, 5, 4, 3, 7, 8};
+                // var actual = ReverseToSort(numbers);
                 // TODO: Assert.Equal("reverse 3 6", actual);
             }
 
             [Fact]
             public void ReverseToSort_NotAbleToSort()
             {
-                var numbers = new List<int> {1, 3, 2, 4, 7, 6, 5, 8}; // no
-                var actual = ReverseToSort(numbers);
+                _ = ReverseToSort(new List<int> {1, 3, 2, 4, 7, 6, 5, 8});
+                // var numbers = new List<int> {1, 3, 2, 4, 7, 6, 5, 8}; // no
+                // var actual = ReverseToSort(numbers);
                 // TODO: Assert.Equal("no", actual);
             }
         }
