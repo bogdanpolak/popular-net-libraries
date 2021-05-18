@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Xunit;
 
 namespace PopularNetLibraries
@@ -167,6 +169,74 @@ namespace PopularNetLibraries
                 // var numbers = new List<int> {1, 3, 2, 4, 7, 6, 5, 8}; // no
                 // var actual = ReverseToSort(numbers);
                 // TODO: Assert.Equal("no", actual);
+            }
+        }
+        
+        // TODO: Add regex sample
+        // https://docs.microsoft.com/en-us/azure/hdinsight/hadoop/apache-hadoop-dotnet-csharp-mapreduce-streaming
+        public class RegexDemoTests
+        {
+            private string MostPopularWords(string[] text, int minimalOccurrence=2, string[] excludedWords = null) 
+            {
+                var words = new List<string>();
+                foreach (var line in text)
+                {
+                    // strip out punctuation, numbers, etc.
+                    var onlyText = Regex.Replace(line, @"\.|;|:|,|[0-9]|'", "");
+                    // split at whitespace
+                    var matches = Regex.Matches(onlyText, @"[\w]+");
+                    words.AddRange( matches.Select(res => res.Value) );
+                }
+                if (excludedWords != null)
+                {
+                    words.RemoveAll(excludedWords.Contains);
+                }
+                var wordCounters = words.Aggregate(
+                    new Dictionary<string, int>(),
+                    (counters, word) =>
+                    {
+                        var lowerWord = word.ToLower();
+                        counters[lowerWord] = counters.ContainsKey(lowerWord) ? counters[lowerWord]+1 : 1;
+                        return counters;
+                    });
+                var orderedWordCounters = wordCounters
+                    .OrderByDescending(pair => pair.Value)
+                    .ToList();
+                var mostPopularWords = orderedWordCounters
+                    .Where(pair => pair.Value >= minimalOccurrence)
+                    .Select(pair=>$"{pair.Key}={pair.Value}")
+                    .ToList();
+                var result = String.Join(" ", mostPopularWords);
+                return result;
+            }
+            
+            [Fact]
+            public void Regex_ListWords()
+            {
+                var text = new[]{
+                    "the action or activity of purchasing goods from stores",
+                    "shopping is so exhausting—all those decisions",
+                    "a busy shopping area blue painted",
+                    "I unloaded all the shopping",
+                    "you did a good job of explaining",
+                    "she's had a plan to nose job",
+                    "the car was a blue painted malevolent looking job",
+                    "I have plan to take a part-time job",
+                    "it's our job to find things out",
+                    "A few pedestrians carrying their evening shopping sheltered from the rain in doorways",
+                    "she is the architect who planned the new shopping centre",
+                    "On the debit side the new shopping centre will increase traffic problems",
+                    "immediately job a blue penknife into the throat",
+                    "he prepared to job the huge brute",
+                    "if left unfettered he would job",
+                    "she wants to be left alone to get on with the job",
+                    "someone had done a skillful paint job",
+                    "his game plan is to buy in then job the shares on at a profit",
+                    "we thought you'd have plan a job getting there"
+                };
+                var excludedWords = new[] {"a", "the", "to", "on", "is", "she", "he", "i", "you"};
+                var mostPopularWords = MostPopularWords(text, 3, excludedWords);
+                Assert.Equal("job=12 shopping=6 plan=4 blue=3", mostPopularWords);
             }
         }
     }
