@@ -10,6 +10,7 @@ namespace PopularNetLibraries.Moq
         {
             public interface IAssetProcessor
             {
+                string GetStorageName();
                 bool Process(string category);
                 bool Process(string category, int maxItems);
                 int CountProcessed();
@@ -18,6 +19,13 @@ namespace PopularNetLibraries.Moq
             private const string Alternate = "alternate";
             private const string Illustrations = "illustrations";
 
+            [Fact]
+            public void GetStorageName_Uninitialised_WillReturnNull()
+            {
+                var assetProcessorMock = new Mock<IAssetProcessor>();
+                Assert.Null(assetProcessorMock.Object.GetStorageName());                    
+            }
+            
             [Fact]
             public void Process_Defined_WillReturnTrue()
             {
