@@ -55,12 +55,43 @@ namespace PopularNetLibraries.Moq
                 managerMock.Verify(manager => manager.ExecuteOne(CrashParts))
             );
         }
+
+        [Fact]
+        public void Verify_ExecuteOne_WasNotCalled()
+        {
+            var managerMock = new Mock<IManager>();
+
+            managerMock.Object.ExecuteAll();
+
+            Assert.Throws<MockException>(() =>
+                managerMock.Verify(manager => manager.ExecuteAll(), Times.Never())
+            );
+        }
+
+        [Fact]
+        public void Verify_BothExecuteMethods_WasCalledAtLeastOnce()
+        {
+            var managerMock = new Mock<IManager>();
+            
+            managerMock.Object.ExecuteAll();
+            managerMock.Object.ExecuteOne(Tires);
+            managerMock.Object.ExecuteOne(CrashParts);
+            
+            managerMock.Verify(manager => manager.ExecuteAll(), Times.AtLeastOnce());
+            managerMock.Verify(manager => manager.ExecuteOne(It.IsAny<string>()), Times.AtLeastOnce());
+        }
         
-        // TODO: Add more samples for behaviour verification (see bellow)
-        /*
-        mock.Verify(foo => foo.DoSomething("ping"), Times.Never());
-        mock.Verify(foo => foo.DoSomething("ping"), Times.AtLeastOnce());
-        mock.VerifyNoOtherCalls();
-        */
+        [Fact]
+        public void Verify_OnlyExecuteAll_WasCalled()
+        {
+            var managerMock = new Mock<IManager>();
+            
+            managerMock.Object.ExecuteAll();
+            managerMock.Object.ExecuteAll();
+            
+            managerMock.Verify(manager => manager.ExecuteAll());
+            managerMock.VerifyNoOtherCalls();
+        }
+        
     }
 }
