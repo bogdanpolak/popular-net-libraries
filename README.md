@@ -14,6 +14,7 @@ Exercise project to demonstrate following libraries:
 * FluentAssertions 
 * AutoFixture
 * language-ext
+* AutoMocker (Moq.AutoMock)
 
 Inspired by:
  * article: Most popular .NET Libraries every developer should know 
