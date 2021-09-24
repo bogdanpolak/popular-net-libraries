@@ -2,23 +2,29 @@
 
 Exercise project to demonstrate following libraries:
 
-* Autofac 
-* AutoMapper
-* BenchmarkDotNet (https://youtu.be/bBpFpr-Votk?t=11468) 
-* FluentValidation 
-* Hangfire 
-* MediatR 
-* Serilog 
-* xUnit 
-* Moq 
-* FluentAssertions 
-* AutoFixture
-* language-ext
-* AutoMocker (Moq.AutoMock)
+* Autofac - [source-code](./PopularNetLibraries/Autofac)
+* AutoMapper - [source-code](./PopularNetLibraries/Automapper)
+* AutoMocker (Moq.AutoMock)  - [source-code](./PopularNetLibraries/AutoMocker)
+* FluentAssertions - [source-code](./PopularNetLibraries/FluentAssertions)
+* FluentValidation - [source-code](./PopularNetLibraries/FluentValidators)
+* MediatR - [source-code](./PopularNetLibraries/MediatR)
+* Moq  - [source-code](./PopularNetLibraries/Moq)
+* xUnit
 
-Inspired by:
- * article: Most popular .NET Libraries every developer should know 
-   * https://medium.com/dotnet-hub/most-popular-c-net-core-libraries-every-developer-should-know-5e38c1a63830
- * article: Functional Programming made easy in C# with Language-ext
+# Next libraries to demonstrate
+
+* AutoFixture
+* Guard Clauses
+
+# Libraries to consider
+
+* BenchmarkDotNet 
+* Hangfire 
+* Serilog 
+* language-ext
+
+# Resources
+
+ * Functional Programming made easy in C# with Language-ext - Yoan Thirion
    * https://yoan-thirion.medium.com/functional-programming-made-easy-in-c-with-language-ext-c4e9d4a512ac
 
