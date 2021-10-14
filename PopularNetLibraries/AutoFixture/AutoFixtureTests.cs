@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net.Mail;
 using AutoFixture;
 using FluentAssertions;
 using Xunit;
@@ -39,6 +41,51 @@ namespace PopularNetLibraries.AutoFixture
                 contact.Type.Should().Be(ContactType.Mobile);
                 contact.Created.Should().BeCloseTo(DateTime.Now, 2 * YearTimeSpan);
             });
+        }
+
+        [Fact]
+        public void Create_EmailAddress()
+        {
+            var email = _fixture.Create<MailAddress>();
+            email.Address.Should().Contain("@example.");
+            email.Address.Should().HaveLength(LengthOfGuid + "@example.".Length + 3);
+        }
+
+        [Fact]
+        public void Create_Dictionary()
+        {
+            var dict = _fixture.Create<Dictionary<byte, string>>();
+            dict.Should().HaveCountGreaterOrEqualTo(2); // Fixture can generate two same keys 
+            dict.Keys.Max().Should().BeGreaterThan(0);  // Keys: 0 .. 255
+            dict.Values.ToList().ForEach(
+                value => value.Should().HaveLength("value".Length + LengthOfGuid));
+        }
+
+        [Fact]
+        public void CreateMany_Ints()
+        {
+            const int count = 13;
+            var numbers = _fixture.CreateMany<int>(count).ToArray();
+            numbers.Should().HaveCount(count);
+        }
+
+        [Fact]
+        public void Build_With()
+        {
+            var luke = _fixture.Build<Friend>()
+                .With( user => user.FullName, "Luke Skywalker" )
+                .Create();
+            luke.FullName.Should().Be("Luke Skywalker");
+        }
+
+        [Fact]
+        public void Build_With_UsingValueFactory()
+        {
+            var friends = _fixture.Build<Friend>()
+                .With(p => p.FullName, (int ordinal) => $"Friend {ordinal}")
+                .CreateMany(2)
+                .ToList();
+            friends.ForEach( f => f.FullName.Should().Contain("Friend "));
         }
     }
 
