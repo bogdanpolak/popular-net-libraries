@@ -95,6 +95,31 @@ namespace PopularNetLibraries.AutoFixture
             friend.Contacts[0].Type.Should().Be(ContactType.Mobile);
             friend.Contacts[2].Type.Should().Be(ContactType.Mobile);
         }
+
+        [Fact]
+        public void InstantiateClasses()
+        {
+            var user = new User(
+                _fixture.Create<string>(),
+                _fixture.Create<string>(),
+                _fixture.Create<string>());
+            user.Should().NotBeNull();
+
+            var skypeContact = new Contact(
+                ContactType.Skype, 
+                _fixture.Create<string>(), 
+                _fixture.Create<DateTime>());
+            var friend = new Friend
+            {
+                FullName = _fixture.Create<string>(),
+                Contacts = new List<Contact>(new[]
+                {
+                    skypeContact, _fixture.Create<Contact>()
+                })
+            };
+            friend.Should().NotBeNull();
+            friend.Contacts.Should().HaveCount(2);
+        }
     }
 
     public record User(string Login, string FirstName, string LastName);
