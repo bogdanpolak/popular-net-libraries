@@ -33,12 +33,10 @@ namespace PopularNetLibraries.AutoFixture
         [Fact]
         public void Create_ComplexClass_Friend()
         {
-            _fixture.Register( () => ContactType.Mobile );
             var friend = _fixture.Create<Friend>();
             friend.Contacts.Should().HaveCount(3);
             friend.Contacts.ForEach(contact =>
             {
-                contact.Type.Should().Be(ContactType.Mobile);
                 contact.Created.Should().BeCloseTo(DateTime.Now, 2 * YearTimeSpan);
             });
         }
@@ -86,6 +84,16 @@ namespace PopularNetLibraries.AutoFixture
                 .CreateMany(2)
                 .ToList();
             friends.ForEach( f => f.FullName.Should().Contain("Friend "));
+        }
+
+        [Fact]
+        public void Inject()
+        {
+            _fixture.Inject( ContactType.Mobile );
+            var friend = _fixture.Create<Friend>();
+            friend.Contacts.Should().HaveCount(3);
+            friend.Contacts[0].Type.Should().Be(ContactType.Mobile);
+            friend.Contacts[2].Type.Should().Be(ContactType.Mobile);
         }
     }
 
