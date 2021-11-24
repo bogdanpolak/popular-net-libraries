@@ -15,16 +15,19 @@ Code Testing / TDD libraries:
 * Moq  - [source-code](./PopularNetLibraries/Moq)
 * xUnit
 
-# Next libraries to demonstrate
+# Next libraries
 
-* Guard Clauses
+* GuardClauses - [Home](https://github.com/ardalis/GuardClauses)
+* FluentResults - [Home](https://github.com/altmann/FluentResults) 
+* ArdalisSpecification - [Home](https://github.com/ardalis/Specification)
+* SmartEnum - [Home](https://github.com/ardalis/SmartEnum)
+* ValueObject - [Home](https://github.com/jhewlett/ValueObject)
+* ValueOf - [Home](https://github.com/mcintyre321/ValueOf)
 
-# Libraries to consider
+# Checkout
 
-* BenchmarkDotNet 
-* Hangfire 
-* Serilog 
-* language-ext
+* ArdalisResult [Home](https://github.com/ardalis/Result)
+* DomainDrivenDesign.DomainObjects - [Home](https://github.com/appie2go/domainobjects)
 
 # Resources
 
