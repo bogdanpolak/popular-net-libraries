@@ -43,8 +43,8 @@ namespace PopularNetLibraries.Automapper
             Unmapped properties:
             Valueee
              */
-            Assert.Contains("Unmapped members were found.",exception.Message);
-            Assert.Contains("Unmapped properties:\nValueee",exception.Message);
+            Assert.Contains("Unmapped members were found",exception.Message);
+            Assert.Contains("Valueee",exception.Message);
         }
 
         class Journal
