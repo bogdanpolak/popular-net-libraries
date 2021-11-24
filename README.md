@@ -4,16 +4,19 @@ Exercise project to demonstrate following libraries:
 
 * Autofac - [source-code](./PopularNetLibraries/Autofac)
 * AutoMapper - [source-code](./PopularNetLibraries/Automapper)
-* AutoMocker (Moq.AutoMock)  - [source-code](./PopularNetLibraries/AutoMocker)
-* FluentAssertions - [source-code](./PopularNetLibraries/FluentAssertions)
 * FluentValidation - [source-code](./PopularNetLibraries/FluentValidators)
 * MediatR - [source-code](./PopularNetLibraries/MediatR)
+
+Code Testing / TDD libraries:
+
+* AutoFixture - [source-code](./PopularNetLibraries/AutoFixture)
+* AutoMocker (Moq.AutoMock) - [source-code](./PopularNetLibraries/AutoMocker)
+* FluentAssertions - [source-code](./PopularNetLibraries/FluentAssertions)
 * Moq  - [source-code](./PopularNetLibraries/Moq)
 * xUnit
 
 # Next libraries to demonstrate
 
-* AutoFixture
 * Guard Clauses
 
 # Libraries to consider
