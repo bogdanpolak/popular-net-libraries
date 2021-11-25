@@ -12,7 +12,8 @@ namespace PopularNetLibraries.MediatR
             builder.RegisterAssemblyTypes(typeof(IMediator).GetTypeInfo().Assembly).AsImplementedInterfaces();
 
             var mediatrOpenTypes = new[] {
-                typeof(IRequestHandler<,>)
+                typeof(IRequestHandler<,>),
+                typeof(INotificationHandler<>),
             };
 
             foreach (var mediatrOpenType in mediatrOpenTypes) {
