@@ -28,6 +28,7 @@ Code Testing / TDD libraries:
 
 * ArdalisResult [Home](https://github.com/ardalis/Result)
 * DomainDrivenDesign.DomainObjects - [Home](https://github.com/appie2go/domainobjects)
+* Scrutor - [Home](https://github.com/khellang/Scrutor)
 
 # Resources
 
