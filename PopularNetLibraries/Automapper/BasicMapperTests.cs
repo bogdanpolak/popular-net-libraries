@@ -1,52 +1,101 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using FluentAssertions;
 using Xunit;
 
 namespace PopularNetLibraries.Automapper
 {
     public class BasicMapperTests
     {
-        private class Order { public int OrderId; }
-        private class OrderDto { public int OrderId; }
-        
         [Fact]
         public void BasicMapping()
         {
             var config = new MapperConfiguration(expression => expression.CreateMap<Order, OrderDto>());
             var mapper = config.CreateMapper();
 
-            var order = new Order {OrderId = 99};
-            OrderDto orderDto = mapper.Map<OrderDto>(order);
+            var order = new Order{ OrderId = 99 };
+            var orderDto = mapper.Map<OrderDto>(order);
             
-            Assert.True(orderDto.OrderId == order.OrderId);
+            orderDto.OrderId.Should().Be(99);
         }
-        private class Source { public int Value; }
-        private class Destination { public int Valueee; }
 
         [Fact]
-        public void InvalidMapping()
+        public void ReverseMapping()
         {
-            var config = new MapperConfiguration(expression => expression.CreateMap<Source, Destination>());
+            var config = new MapperConfiguration(expression =>
+            {
+                expression.CreateMap<Order, OrderDto>().ReverseMap();
+            });
             var mapper = config.CreateMapper();
+
+            var order = new Order{ OrderId = 99 };
+            var orderDto = mapper.Map<OrderDto>(order);
+            var orderDto2 = new OrderDto { OrderId = 312 };
+            var order2 = mapper.Map<Order>(orderDto2);
+            
+            orderDto.OrderId.Should().Be(99);
+            order2.Should().BeEquivalentTo(new { OrderId = 312 });
+        }
+
+        [Fact]
+        public void AssertConfigurationIsValid_WithUnmappedMembers_ShouldThrow()
+        {
+            var config = new MapperConfiguration(expression => expression.CreateMap<OrderRequest, Order>());
             
             var exception = Assert.Throws<AutoMapperConfigurationException>( 
                 ()=>config.AssertConfigurationIsValid() );
-            /*
-            Unmapped members were found. Review the types and members below.
-            Add a custom mapping expression, ignore, add a custom resolver, or modify the source/destination type
-            For no matching constructor, add a no-arg ctor, add optional arguments, or map all of the constructor parameters
-            ============================================================================================================
-            Source -> Destination (Destination member list)
-            PopularNetLibraries.Automapper.BasicMapper+Source -> PopularNetLibraries.Automapper.BasicMapper+Destination (Destination member list)
-
-            Unmapped properties:
-            Valueee
-             */
             Assert.Contains("Unmapped members were found",exception.Message);
-            Assert.Contains("Valueee",exception.Message);
+            Assert.Contains("OrderId",exception.Message);
         }
 
+        [Fact]
+        public void Map_WithCustomMapping()
+        {
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<OrderRequest, Order>()
+                    .ForMember(
+                        dest => dest.OrderId,
+                        opt => opt.MapFrom(src => src.Id));
+            });
+            var mapper = config.CreateMapper();
+
+            var orderRequest = new OrderRequest{ Id = 124 };
+            var order = mapper.Map<Order>(orderRequest);
+
+            order.OrderId.Should().Be(orderRequest.Id);
+        }
+
+        [Fact]
+        public void Map_WithFlattering()
+        {
+            var config = new MapperConfiguration(expression => expression.CreateMap<Journal, YearGrade>());
+            var mapper = config.CreateMapper();
+            var journal = new Journal
+            {
+                Student = new Student{ FirstName = "Bogdan", LastName = "Smith" },
+                Grades = new List<double>{ 3.5, 4.5, 4, 3.5, 4.2, 4.5, 3.8, 5 }
+            };
+            journal.Student.GetFullName().Should().Be("Bogdan Smith");
+            journal.GetAverageGrade().Should().Be(4.125);
+
+            var yearGrade = mapper.Map<YearGrade>(journal);
+
+            yearGrade.Should().BeEquivalentTo(new YearGrade
+            {
+                StudentFullName = "Bogdan Smith", 
+                AverageGrade = 4.125
+            });
+        } 
+
+        // --------------------------------------------------------------------------
+
+        private class Order { public int OrderId; }
+        private class OrderDto { public int OrderId; }
+        private class OrderRequest { public int Id; }
+
+        
         class Journal
         {
             public List<double> Grades; 
@@ -56,7 +105,6 @@ namespace PopularNetLibraries.Automapper
 
         private class Student
         {
-            public int ID;
             public string FirstName;
             public string LastName;
             public string GetFullName() => $"{FirstName} {LastName}";
@@ -68,22 +116,6 @@ namespace PopularNetLibraries.Automapper
             public double AverageGrade;
         }
 
-        [Fact]
-        public void MapWithFlattering()
-        {
-            var config = new MapperConfiguration(expression => expression.CreateMap<Journal, YearGrade>());
-            var mapper = config.CreateMapper();
-            var journal = new Journal
-            {
-                Student = new Student {ID = 1, FirstName = "Bogdan", LastName = "Polak"},
-                Grades = new List<double>{3.5, 4.5, 4, 3.5, 4.2, 4.5, 3.8, 5}
-            };
-
-            var yearGrade = mapper.Map<YearGrade>(journal);
-            
-            Assert.Equal("Bogdan Polak",yearGrade.StudentFullName);
-            Assert.Equal(expected:4.125,actual:yearGrade.AverageGrade,precision:4);
-        } 
     }
     
 }
