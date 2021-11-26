@@ -15,41 +15,45 @@ namespace PopularNetLibraries.MediatR
 
         public NotificationTest()
         {
-            _mediator = MediatorBuilder.Build(typeof(NotificationTest).GetTypeInfo().Assembly);
+            
+            _mediator = MediatorBuilder
+                .Build(GetType().GetTypeInfo().Assembly);
         }
         
         [Fact]
         public async Task AddTwoProductsIntoBasket()
         {
-            const string userBogdanPolak = "bpolak";
-            await _mediator.Publish(new AddProductToBasketEvent.Notification(
-                userBogdanPolak,
+            const string userBogdan = "bogdan.smith";
+            await _mediator.Publish(new AddProductToBasket.Event(
+                userBogdan,
                 "15939975"));
-            await _mediator.Publish(new AddProductToBasketEvent.Notification(
-                userBogdanPolak,
+            await _mediator.Publish(new AddProductToBasket.Event(
+                userBogdan,
                 "1520287912081"));
-            Basket.ForAUser(userBogdanPolak).Products.Should().HaveCount(2);
-            Basket.ForAUser("abc").Products.Should().HaveCount(0);
+            Basket.ForAUser(userBogdan).Products.Should().HaveCount(2);
         }
     }
 
-    internal static class AddProductToBasketEvent
+    public static class AddProductToBasket
     {
-        internal record Notification(string UserName, string ProductNumber) : INotification;
+        public record Event(string UserName, string ProductNumber) : INotification;
 
-        internal class Handler : INotificationHandler<Notification>
+        public class Handler : INotificationHandler<Event>
         {
-            public Task Handle(Notification notification, CancellationToken cancellationToken)
+            public Task Handle(Event @event, CancellationToken cancellationToken)
             {
-                var (userName, productNumber) = notification;
-                if (string.IsNullOrEmpty(userName)) throw new ArgumentException("User name is empty");
-                Basket.ForAUser(userName).AddProduct(productNumber);
+                var (userName, productNumber) = @event;
+                if (string.IsNullOrEmpty(userName)) 
+                    throw new ArgumentException("User name is empty");
+                Basket
+                    .ForAUser(userName)
+                    .AddProduct(productNumber);
                 return Task.CompletedTask;
             }
         }
     }
-    
-    internal record Basket(List<Product> Products)
+
+    public record Basket(List<Product> Products)
     {
         private static readonly Dictionary<string, Basket> CurrentBaskets = new(); 
         public void AddProduct(string productCode) => Products.Add(new Product(productCode));
@@ -62,5 +66,6 @@ namespace PopularNetLibraries.MediatR
             return basket;
         }
     }
-    internal record Product(string Code);
+
+    public record Product(string Code);
 }
