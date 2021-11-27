@@ -6,18 +6,18 @@ Exercise project to demonstrate following libraries:
 * AutoMapper - [source-code](./PopularNetLibraries/Automapper)
 * FluentValidation - [source-code](./PopularNetLibraries/FluentValidators)
 * MediatR - [source-code](./PopularNetLibraries/MediatR)
+* GuardClauses - [source-code](./PopularNetLibraries/GuardClauses)
 
 Code Testing / TDD libraries:
 
 * AutoFixture - [source-code](./PopularNetLibraries/AutoFixture)
 * AutoMocker (Moq.AutoMock) - [source-code](./PopularNetLibraries/AutoMocker)
 * FluentAssertions - [source-code](./PopularNetLibraries/FluentAssertions)
-* Moq  - [source-code](./PopularNetLibraries/Moq)
-* xUnit
+* Moq - [source-code](./PopularNetLibraries/Moq)
+* xUnit - *used in all of the demos*
 
 # Next libraries
 
-* GuardClauses - [Home](https://github.com/ardalis/GuardClauses)
 * FluentResults - [Home](https://github.com/altmann/FluentResults) 
 * ArdalisSpecification - [Home](https://github.com/ardalis/Specification)
 * SmartEnum - [Home](https://github.com/ardalis/SmartEnum)
