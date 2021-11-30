@@ -53,7 +53,7 @@ namespace PopularNetLibraries.FluentResults
 
         private static readonly DateTime Nov20 = 20.November(2021);
         private static readonly DateTime Nov21 = 21.November(2021);
-        private IList<Part> Parts { get; } = new List<Part>
+        private IEnumerable<Part> Parts { get; } = new List<Part>
         {
             new("134562", 12.30m, Nov20.At(17,30)),
             new("315231", 7.98m, Nov20.At(21,45)),
