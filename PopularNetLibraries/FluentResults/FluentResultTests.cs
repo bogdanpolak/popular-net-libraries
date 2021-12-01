@@ -44,8 +44,8 @@ namespace PopularNetLibraries.FluentResults
         }
 
         [Fact]
-            public void Result_Try_WithSuccess()
-            {
+        public void Result_Try_WithSuccess()
+        {
             var resultSuccess = Result.Try(() => Converters.ToTemperature("-10"));
             resultSuccess.ValueOrDefault.Should().Be(-10);
         }
