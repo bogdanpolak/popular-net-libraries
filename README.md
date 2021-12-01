@@ -7,6 +7,7 @@ Exercise project to demonstrate following libraries:
 * FluentValidation - [source-code](./PopularNetLibraries/FluentValidators)
 * MediatR - [source-code](./PopularNetLibraries/MediatR)
 * GuardClauses - [source-code](./PopularNetLibraries/GuardClauses)
+* FluentResults - [source-code](./PopularNetLibraries/FluentResults)
 
 Code Testing / TDD libraries:
 
@@ -18,7 +19,6 @@ Code Testing / TDD libraries:
 
 # Next libraries
 
-* FluentResults - [Home](https://github.com/altmann/FluentResults) 
 * ArdalisSpecification - [Home](https://github.com/ardalis/Specification)
 * SmartEnum - [Home](https://github.com/ardalis/SmartEnum)
 * ValueObject - [Home](https://github.com/jhewlett/ValueObject)
