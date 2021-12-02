@@ -9,7 +9,7 @@ Exercise project to demonstrate following libraries:
 * GuardClauses - [source-code](./PopularNetLibraries/GuardClauses)
 * FluentResults - [source-code](./PopularNetLibraries/FluentResults)
 
-Code Testing / TDD libraries:
+Unit Testing / Code Verification / TDD libraries:
 
 * AutoFixture - [source-code](./PopularNetLibraries/AutoFixture)
 * AutoMocker (Moq.AutoMock) - [source-code](./PopularNetLibraries/AutoMocker)
