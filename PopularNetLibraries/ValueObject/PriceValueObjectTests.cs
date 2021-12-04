@@ -13,14 +13,20 @@ namespace PopularNetLibraries.ValueObject
             giftCardPrice.Value.Should().Be(100m);
             giftCardPrice.Currency.Should().Be("PLN");
         }
+
+        [Fact]
+        public void PricesNotEqual_WhenTwoDifferentCurrencies()
+        {
+            var giftCardPrice = new Price(100, "PLN");
+            var speakerPrice = new Price(100, "GBP");
+            giftCardPrice.Should().NotBe(speakerPrice);
+        }
     }
 
     public class Price : ValueObject
     {
         public decimal Value { get; }
         public string Currency { get; }
-
-        private Price() { }
 
         public Price(decimal value, string currency)
         {
