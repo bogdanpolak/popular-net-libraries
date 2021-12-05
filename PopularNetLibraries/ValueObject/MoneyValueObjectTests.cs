@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using Xunit;
-// ReSharper disable InconsistentNaming
 
 namespace PopularNetLibraries.ValueObject
 {
