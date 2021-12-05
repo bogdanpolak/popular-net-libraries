@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using Xunit;
 // ReSharper disable InconsistentNaming
@@ -21,6 +22,22 @@ namespace PopularNetLibraries.ValueObject
             var giftCardPrice = new Money(100, Currency.PLN);
             var speakerPrice = new Money(100, Currency.USD);
             giftCardPrice.Should().NotBe(speakerPrice);
+        }
+
+        [Fact]
+        public void EqualSymbol_FindMoneyInTheWallet()
+        {
+            var wallet = new List<Money>
+            {
+                new(300, Currency.PLN),
+                new(50, Currency.USD),
+                new(200, Currency.CAD),
+                new(11, Currency.USD),
+                new(20, Currency.PLN)
+            };
+            var money = new Money(11, Currency.USD);
+            var selected = wallet.FirstOrDefault(x => x == money);
+            selected.Should().NotBeNull();
         }
     }
 
