@@ -8,7 +8,7 @@ Exercise project to demonstrate following libraries:
 * MediatR - [source-code](./PopularNetLibraries/MediatR)
 * GuardClauses - [source-code](./PopularNetLibraries/GuardClauses)
 * FluentResults - [source-code](./PopularNetLibraries/FluentResults)
-* ValueObject (individual) - [Home](./PopularNetLibraries/ValueObject)
+* ValueObject (individual) - [source-code](./PopularNetLibraries/ValueObject)
 
 Unit Testing / Code Verification / TDD libraries:
 
