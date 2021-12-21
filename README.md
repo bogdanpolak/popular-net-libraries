@@ -9,6 +9,7 @@ Exercise project to demonstrate following libraries:
 * GuardClauses - [source-code](./PopularNetLibraries/GuardClauses)
 * FluentResults - [source-code](./PopularNetLibraries/FluentResults)
 * ValueObject (individual) - [source-code](./PopularNetLibraries/ValueObject)
+* ArdalisSpecification - [source-code](./PopularNetLibraries/ArdalisSpecification) / [GitHub home](https://github.com/ardalis/Specification)
 
 Unit Testing / Code Verification / TDD libraries:
 
@@ -20,7 +21,6 @@ Unit Testing / Code Verification / TDD libraries:
 
 # Next libraries
 
-* ArdalisSpecification - [Home](https://github.com/ardalis/Specification)
 * SmartEnum - [Home](https://github.com/ardalis/SmartEnum)
 * ValueOf - [Home](https://github.com/mcintyre321/ValueOf)
 * FunctionalExtensions (Vladimir Khorikov) - [Home](https://github.com/vkhorikov/CSharpFunctionalExtensions)
